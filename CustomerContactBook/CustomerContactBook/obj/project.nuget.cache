@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "rsqZ0/2FaYa8P+lUzVgjWq38rnmhv2Jy/rO0e0w6pPTM9euns1pC5FxE2jl/srf1rZn3C6UxfjASKHVKI+h5lQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\stormtrooper\\Documents\\GitHub\\Customer-Contact-Book\\CustomerContactBook\\CustomerContactBook\\CustomerContactBook.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\stormtrooper\\.nuget\\packages\\fsharp.core\\6.0.6\\fsharp.core.6.0.6.nupkg.sha512"
+  ],
+  "logs": []
+}
