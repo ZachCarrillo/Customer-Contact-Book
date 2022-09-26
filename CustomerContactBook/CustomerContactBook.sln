@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CustomerContactBook", "CustomerContactBook\CustomerContactBook.fsproj", "{A0C44BBE-FA77-468B-B374-DD4E214A60A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerContactBook", "CustomerContactBook\CustomerContactBook.csproj", "{25CF51E3-F387-4C6D-A4A9-1E09325E3DB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A0C44BBE-FA77-468B-B374-DD4E214A60A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0C44BBE-FA77-468B-B374-DD4E214A60A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0C44BBE-FA77-468B-B374-DD4E214A60A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0C44BBE-FA77-468B-B374-DD4E214A60A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25CF51E3-F387-4C6D-A4A9-1E09325E3DB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25CF51E3-F387-4C6D-A4A9-1E09325E3DB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25CF51E3-F387-4C6D-A4A9-1E09325E3DB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25CF51E3-F387-4C6D-A4A9-1E09325E3DB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {1F5DD8B1-7945-4315-A90A-79312C8240DD}
+		SolutionGuid = {1C5EC459-3632-4203-AA28-87E9212EFF7C}
 	EndGlobalSection
 EndGlobal

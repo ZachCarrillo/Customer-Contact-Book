@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rsqZ0/2FaYa8P+lUzVgjWq38rnmhv2Jy/rO0e0w6pPTM9euns1pC5FxE2jl/srf1rZn3C6UxfjASKHVKI+h5lQ==",
+  "dgSpecHash": "vf9Pe9iUyPWIHW5RvCt+CYcKFeeR/9OY7Ow7TfTBXjsSbU65bvtFcUq3J71WTTPYRd0vF1v27Mkcr/lYcc9prA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\stormtrooper\\Documents\\GitHub\\Customer-Contact-Book\\CustomerContactBook\\CustomerContactBook\\CustomerContactBook.fsproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\stormtrooper\\.nuget\\packages\\fsharp.core\\6.0.6\\fsharp.core.6.0.6.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\stormtrooper\\Documents\\GitHub\\Customer-Contact-Book\\CustomerContactBook\\CustomerContactBook\\CustomerContactBook.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }
