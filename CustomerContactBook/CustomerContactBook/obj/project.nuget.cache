@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "vf9Pe9iUyPWIHW5RvCt+CYcKFeeR/9OY7Ow7TfTBXjsSbU65bvtFcUq3J71WTTPYRd0vF1v27Mkcr/lYcc9prA==",
+  "dgSpecHash": "MTS4EuptMncsMOcLzwpPcegy0ZzjQGTmkKrkvS6uj64OWsc2nnnrXPqy6fd76IRNjjg0QWgAN73/YXx0L5Cp6Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\stormtrooper\\Documents\\GitHub\\Customer-Contact-Book\\CustomerContactBook\\CustomerContactBook\\CustomerContactBook.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\stormtrooper\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\stormtrooper\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\stormtrooper\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\stormtrooper\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\stormtrooper\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\stormtrooper\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
   "logs": []
 }
