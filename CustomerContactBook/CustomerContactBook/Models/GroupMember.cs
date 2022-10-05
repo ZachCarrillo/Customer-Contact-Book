@@ -4,7 +4,7 @@ namespace CustomerContactBook.Models
 {
     public class GroupMember
     {
-        public int CustomerId { get; set; }
-        public int GroupId { get; set; }
+        public long CustomerId { get; set; }
+        public long GroupId { get; set; }
     }
 }
