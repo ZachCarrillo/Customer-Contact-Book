@@ -22,6 +22,9 @@ namespace CustomerContactBook.Controllers
         }
 
         // GET: api/GroupMembers
+        /// <summary>
+        /// return all group members
+        /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GroupMember>>> GetGroupMembers()
         {
@@ -29,6 +32,10 @@ namespace CustomerContactBook.Controllers
         }
 
         // GET: api/GroupMembers/5
+        /// <summary>
+        /// get all groupmembers with same id
+        /// </summary>
+        /// <param name="id">id of group member</param>
         [HttpGet("{id}")]
         public async Task<ActionResult<GroupMember>> GetGroupMember(int id)
         {
@@ -44,6 +51,11 @@ namespace CustomerContactBook.Controllers
 
         // PUT: api/GroupMembers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// create groupmember with specified id if not already created
+        /// </summary>
+        /// <param name="id">id of group member to make</param>
+        /// <param name="groupMember">group member to make</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGroupMember(int id, GroupMember groupMember)
         {
@@ -68,6 +80,10 @@ namespace CustomerContactBook.Controllers
 
         // POST: api/GroupMembers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// create a group member
+        /// </summary>
+        /// <param name="groupMember">group member to create</param>
         [HttpPost]
         public async Task<ActionResult<GroupMember>> PostGroupMember(GroupMember groupMember)
         {
@@ -78,6 +94,10 @@ namespace CustomerContactBook.Controllers
         }
 
         // DELETE: api/GroupMembers/5
+        /// <summary>
+        /// delete a group member with specified id
+        /// </summary>
+        /// <param name="id">id of group member to delete</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGroupMember(int id)
         {

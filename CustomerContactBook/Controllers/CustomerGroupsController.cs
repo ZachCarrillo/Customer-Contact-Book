@@ -21,6 +21,9 @@ namespace CustomerContactBook.Controllers
         }
 
         // GET: api/CustomerGroups
+        /// <summary>
+        /// Returns all CustomerGroups
+        /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CustomerGroup>>> GetGroups()
         {
@@ -28,6 +31,10 @@ namespace CustomerContactBook.Controllers
         }
 
         // GET: api/CustomerGroups/5
+        /// <summary>
+        /// Return all customer groups with same id
+        /// </summary>
+        /// <param name="id"> group id</param>
         [HttpGet("{id}")]
         public async Task<ActionResult<CustomerGroup>> GetCustomerGroup(int id)
         {
@@ -43,6 +50,11 @@ namespace CustomerContactBook.Controllers
 
         // PUT: api/CustomerGroups/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// creates customer group with specified id if doesnt exist already
+        /// </summary>
+        /// <param name="id">id of group</param>
+        /// <param name="customerGroup">customerGroup to add</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomerGroup(int id, CustomerGroup customerGroup)
         {
@@ -67,6 +79,10 @@ namespace CustomerContactBook.Controllers
 
         // POST: api/CustomerGroups
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Create new customer groip
+        /// </summary>
+        /// <param name="customerGroup">CustomerGroup to add</param>
         [HttpPost]
         public async Task<ActionResult<CustomerGroup>> PostCustomerGroup(CustomerGroup customerGroup)
         {
@@ -77,6 +93,10 @@ namespace CustomerContactBook.Controllers
         }
 
         // DELETE: api/CustomerGroups/5
+        /// <summary>
+        /// Delete specified group
+        /// </summary>
+        /// <param name="id">id of group to be deleted</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomerGroup(int id)
         {

@@ -21,6 +21,9 @@ namespace CustomerContactBook.Controllers
         }
 
         // GET: api/Customers
+        /// <summary>
+        /// return all customers
+        /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
@@ -28,6 +31,10 @@ namespace CustomerContactBook.Controllers
         }
 
         // GET: api/Customers/5
+        /// <summary>
+        /// return all customers with same id
+        /// </summary>
+        /// <param name="id">customer id</param>
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
@@ -43,6 +50,11 @@ namespace CustomerContactBook.Controllers
 
         // PUT: api/Customers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// create customer with specified id if one isnt already made
+        /// </summary>
+        /// <param name="id">id of customer</param>
+        /// <param name="customer">Customer to create</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(int id, Customer customer)
         {
@@ -67,6 +79,10 @@ namespace CustomerContactBook.Controllers
 
         // POST: api/Customers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// create customer
+        /// </summary>
+        /// <param name="customer">customer to create</param>
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
@@ -77,6 +93,10 @@ namespace CustomerContactBook.Controllers
         }
 
         // DELETE: api/Customers/5
+        /// <summary>
+        /// delete customer with same id
+        /// </summary>
+        /// <param name="id">id of customer to delete</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
