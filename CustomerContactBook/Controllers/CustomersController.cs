@@ -32,7 +32,7 @@ namespace CustomerContactBook.Controllers
 
         // GET: api/Customers/5
         /// <summary>
-        /// return all customers with same id
+        /// return customer with same id
         /// </summary>
         /// <param name="id">customer id</param>
         [HttpGet("{id}")]
@@ -51,7 +51,8 @@ namespace CustomerContactBook.Controllers
         // PUT: api/Customers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         /// <summary>
-        /// create customer with specified id if one isnt already made
+        /// updates customer with specified id if exists
+        /// returns 404 not found if id doesnt exist
         /// </summary>
         /// <param name="id">id of customer</param>
         /// <param name="customer">Customer to create</param>

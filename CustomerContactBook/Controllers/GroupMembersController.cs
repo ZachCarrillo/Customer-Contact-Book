@@ -33,7 +33,7 @@ namespace CustomerContactBook.Controllers
 
         // GET: api/GroupMembers/5
         /// <summary>
-        /// get all groupmembers with same id
+        /// get groupmember with same id
         /// </summary>
         /// <param name="id">id of group member</param>
         [HttpGet("{id}")]
@@ -52,7 +52,8 @@ namespace CustomerContactBook.Controllers
         // PUT: api/GroupMembers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         /// <summary>
-        /// create groupmember with specified id if not already created
+        /// updates groupmember with specified id.
+        /// returns 404 not found if id doesnt exits
         /// </summary>
         /// <param name="id">id of group member to make</param>
         /// <param name="groupMember">group member to make</param>

@@ -32,7 +32,7 @@ namespace CustomerContactBook.Controllers
 
         // GET: api/CustomerGroups/5
         /// <summary>
-        /// Return all customer groups with same id
+        /// Return customer groups with same id
         /// </summary>
         /// <param name="id"> group id</param>
         [HttpGet("{id}")]
@@ -51,7 +51,8 @@ namespace CustomerContactBook.Controllers
         // PUT: api/CustomerGroups/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         /// <summary>
-        /// creates customer group with specified id if doesnt exist already
+        /// creates customer group with specified id
+        /// returns 404 not found if id doesnt exist
         /// </summary>
         /// <param name="id">id of group</param>
         /// <param name="customerGroup">customerGroup to add</param>
