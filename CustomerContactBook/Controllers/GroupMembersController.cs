@@ -14,9 +14,9 @@ namespace CustomerContactBook.Controllers
     [ApiController]
     public class GroupMembersController : ControllerBase
     {
-        private readonly GroupMemberContext _context;
+        private readonly ContactBookContext _context;
 
-        public GroupMembersController(GroupMemberContext context)
+        public GroupMembersController(ContactBookContext context)
         {
             _context = context;
         }

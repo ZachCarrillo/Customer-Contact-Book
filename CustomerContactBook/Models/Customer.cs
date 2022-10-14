@@ -1,4 +1,6 @@
-﻿namespace CustomerContactBook.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CustomerContactBook.Models
 {
     /// <summary>
     ///  Model class for Customer
@@ -9,6 +11,7 @@
         /// Customer identifier
         /// </summary>
         /// <example>1893</example>
+        [Key]
         public long Id { get; set; }
         /// <summary>
         /// Customer first name
