@@ -36,7 +36,7 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">customer id</param>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer(int id)
+        public async Task<ActionResult<Customer>> GetCustomer(long id)
         {
             var customer = await _context.Customers.FindAsync(id);
 

@@ -88,6 +88,15 @@ namespace CustomerContactBook.Controllers
         [HttpPost]
         public async Task<ActionResult<GroupMember>> PostGroupMember(GroupMember groupMember)
         {
+            var customer = await _context.Customers.FindAsync(groupMember.CustomerId);
+            var group = await _context.Groups.FindAsync(groupMember.GroupId);
+
+            //if the customer and group does not yet exist return NotFound()
+            if (customer == null || group == null)
+            {
+                return NotFound();
+            }
+
             _context.GroupMembers.Add(groupMember);
             await _context.SaveChangesAsync();
 
