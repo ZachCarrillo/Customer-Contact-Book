@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ContactBookContext>(opt =>
                opt.UseInMemoryDatabase("ContactBook"));
 builder.Services.AddScoped<CustomersService>();
+builder.Services.AddScoped<GroupService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

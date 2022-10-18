@@ -41,7 +41,7 @@ namespace CustomerContactBook.Controllers
         public async Task<ActionResult<Customer>> GetCustomer(long id)
         {
             var result = await _customerService.GetCustomer(id);
-            return result;
+            return result == null ? NotFound() : result;
         }
 
         // PUT: api/Customers/5
@@ -55,8 +55,12 @@ namespace CustomerContactBook.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(long id, Customer customer)
         {
+            if (id != customer.Id)
+            {
+                return BadRequest();
+            }
             var result = await _customerService.PutCustomer(id, customer);
-            return result;
+            return result == null ? NotFound() : NoContent();
         }
 
         // POST: api/Customers
@@ -69,7 +73,7 @@ namespace CustomerContactBook.Controllers
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
             var result = await _customerService.PostCustomer(customer);
-            return result;
+            return CreatedAtAction("GetCustomer", new { id = result.Id }, result);
         }
 
         // DELETE: api/Customers/5
@@ -81,7 +85,7 @@ namespace CustomerContactBook.Controllers
         public async Task<IActionResult> DeleteCustomer(long id)
         {
             var result = await _customerService.DeleteCustomer(id);
-            return result;
+            return result == true ? NotFound() : NoContent();
         }
     }
 }

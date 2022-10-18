@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CustomerContactBook.Services
 {
-    public class CustomersService : ControllerBase
+    public class CustomersService
     {
         private readonly ContactBookContext _context;
 
@@ -24,19 +24,14 @@ namespace CustomerContactBook.Services
 
             if (customer == null)
             {
-                return NotFound();
+                return null;
             }
 
             return customer;
         }
 
-        public async Task<IActionResult> PutCustomer(long id, Customer customer)
+        public async Task<bool?> PutCustomer(long id, Customer customer)
         {
-            if (id != customer.Id)
-            {
-                return BadRequest();
-            }
-
             _context.Entry(customer).State = EntityState.Modified;
 
             try
@@ -45,32 +40,32 @@ namespace CustomerContactBook.Services
             }
             catch (DbUpdateConcurrencyException) when (!CustomerExists(id))
             {
-                return NotFound();
+                return null;
             }
 
-            return NoContent();
+            return true;
         }
 
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        public async Task<Customer> PostCustomer(Customer customer)
         {
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
+            return customer;
         }
 
-        public async Task<IActionResult> DeleteCustomer(long id)
+        public async Task<bool> DeleteCustomer(long id)
         {
             var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
-                return NotFound();
+                return false;
             }
 
             _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return true;
         }
 
         private bool CustomerExists(long id)

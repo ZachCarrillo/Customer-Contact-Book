@@ -36,10 +36,10 @@ namespace CustomerContactBook.Controllers
         /// get groupmember with same id
         /// </summary>
         /// <param name="id">id of group member</param>
-        [HttpGet("{id}")]
-        public async Task<ActionResult<GroupMember>> GetGroupMember(int id)
+        [HttpGet("{Cid}/{Gid}")]
+        public async Task<ActionResult<GroupMember>> GetGroupMember(long Cid, long Gid)
         {
-            var groupMember = await _context.GroupMembers.FindAsync(id);
+            var groupMember = await _context.GroupMembers.FindAsync(Cid, Gid);
 
             if (groupMember == null)
             {
@@ -57,25 +57,19 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">id of group member to make</param>
         /// <param name="groupMember">group member to make</param>
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutGroupMember(int id, GroupMember groupMember)
+        [HttpPut("{Cid}/{Gid}")]
+        public async Task<IActionResult> PutGroupMember(long Gid,long Cid , GroupMember groupMember)
         {
-            if (id != groupMember.GroupId)
+            var toChange = await _context.GroupMembers.FindAsync(Cid, Gid);
+            var customer = await _context.Customers.FindAsync(groupMember.CustomerId);
+            var group = await _context.Groups.FindAsync(groupMember.GroupId);
+            if (customer == null || group == null || toChange == null)
             {
                 return BadRequest();
             }
 
-            _context.Entry(groupMember).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException) when(!GroupMemberExists(id))
-            {
-                return NotFound();
-            }
-
+            await DeleteGroupMember(Cid, Gid);
+            await PostGroupMember(groupMember);
             return NoContent();
         }
 
@@ -100,18 +94,19 @@ namespace CustomerContactBook.Controllers
             _context.GroupMembers.Add(groupMember);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGroupMember", new { id = groupMember.GroupId }, groupMember);
+            return CreatedAtAction("GetGroupMember", new { Cid = groupMember.CustomerId, Gid = groupMember.GroupId }, groupMember);
         }
 
         // DELETE: api/GroupMembers/5
         /// <summary>
         /// delete a group member with specified id
         /// </summary>
-        /// <param name="id">id of group member to delete</param>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGroupMember(int id)
+        /// <param name="Cid">partial key</param>
+        /// <param name="Gid">partial key</param>
+        [HttpDelete("{Cid}/{Gid}")]
+        public async Task<IActionResult> DeleteGroupMember(long Cid, long Gid)
         {
-            var groupMember = await _context.GroupMembers.FindAsync(id);
+            var groupMember = await _context.GroupMembers.FindAsync(Cid, Gid);
             if (groupMember == null)
             {
                 return NotFound();
@@ -123,9 +118,5 @@ namespace CustomerContactBook.Controllers
             return NoContent();
         }
 
-        private bool GroupMemberExists(int id)
-        {
-            return _context.GroupMembers.Any(e => e.GroupId == id);
-        }
     }
 }
