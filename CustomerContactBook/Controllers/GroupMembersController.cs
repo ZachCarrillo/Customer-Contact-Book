@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CustomerContactBook.Models;
 using CustomerContactBook.Controllers;
+using CustomerContactBook.Services;
 
 namespace CustomerContactBook.Controllers
 {
@@ -14,11 +15,11 @@ namespace CustomerContactBook.Controllers
     [ApiController]
     public class GroupMembersController : ControllerBase
     {
-        private readonly ContactBookContext _context;
+        private readonly MembersService _membersService;
 
-        public GroupMembersController(ContactBookContext context)
+        public GroupMembersController(MembersService membersService)
         {
-            _context = context;
+            _membersService = membersService;
         }
 
         // GET: api/GroupMembers
@@ -28,7 +29,8 @@ namespace CustomerContactBook.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GroupMember>>> GetGroupMembers()
         {
-            return await _context.GroupMembers.ToListAsync();
+            var result = await _membersService.GetGroupMembers();
+            return result;
         }
 
         // GET: api/GroupMembers/5
@@ -39,14 +41,9 @@ namespace CustomerContactBook.Controllers
         [HttpGet("{Cid}/{Gid}")]
         public async Task<ActionResult<GroupMember>> GetGroupMember(long Cid, long Gid)
         {
-            var groupMember = await _context.GroupMembers.FindAsync(Cid, Gid);
+            var result = await _membersService.GetGroupMember(Cid, Gid);
 
-            if (groupMember == null)
-            {
-                return NotFound();
-            }
-
-            return groupMember;
+            return result == null ? NotFound() : result;
         }
 
         // PUT: api/GroupMembers/5
@@ -60,17 +57,8 @@ namespace CustomerContactBook.Controllers
         [HttpPut("{Cid}/{Gid}")]
         public async Task<IActionResult> PutGroupMember(long Gid,long Cid , GroupMember groupMember)
         {
-            var toChange = await _context.GroupMembers.FindAsync(Cid, Gid);
-            var customer = await _context.Customers.FindAsync(groupMember.CustomerId);
-            var group = await _context.Groups.FindAsync(groupMember.GroupId);
-            if (customer == null || group == null || toChange == null)
-            {
-                return BadRequest();
-            }
-
-            await DeleteGroupMember(Cid, Gid);
-            await PostGroupMember(groupMember);
-            return NoContent();
+            var result = await _membersService.PutGroupMember(Cid, Gid, groupMember);
+            return result == true ? NoContent() : BadRequest();
         }
 
         // POST: api/GroupMembers
@@ -82,19 +70,9 @@ namespace CustomerContactBook.Controllers
         [HttpPost]
         public async Task<ActionResult<GroupMember>> PostGroupMember(GroupMember groupMember)
         {
-            var customer = await _context.Customers.FindAsync(groupMember.CustomerId);
-            var group = await _context.Groups.FindAsync(groupMember.GroupId);
+            var result = await _membersService.PostGroupMember(groupMember);
 
-            //if the customer and group does not yet exist return NotFound()
-            if (customer == null || group == null)
-            {
-                return NotFound();
-            }
-
-            _context.GroupMembers.Add(groupMember);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetGroupMember", new { Cid = groupMember.CustomerId, Gid = groupMember.GroupId }, groupMember);
+            return result == null ? NotFound() : CreatedAtAction("GetGroupMember", new { Cid = groupMember.CustomerId, Gid = groupMember.GroupId }, groupMember);
         }
 
         // DELETE: api/GroupMembers/5
@@ -106,16 +84,8 @@ namespace CustomerContactBook.Controllers
         [HttpDelete("{Cid}/{Gid}")]
         public async Task<IActionResult> DeleteGroupMember(long Cid, long Gid)
         {
-            var groupMember = await _context.GroupMembers.FindAsync(Cid, Gid);
-            if (groupMember == null)
-            {
-                return NotFound();
-            }
-
-            _context.GroupMembers.Remove(groupMember);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            var result = await _membersService.DeleteGroupMember(Cid, Gid);
+            return result == false ? NotFound() : NoContent();
         }
 
     }
