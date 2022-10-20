@@ -1,9 +1,11 @@
-﻿namespace CustomerContactBook.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CustomerContactBook.Models
 {
     /// <summary>
     ///  Model class for Customer
     /// </summary>
-    public class Customer
+    public class CustomerModel
     {
         /// <summary>
         /// Customer identifier

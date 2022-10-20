@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using CustomerContactBook.Services;
+using CustomerContactBook.Database.Tables;
 using CustomerContactBook.Models;
 
 namespace CustomerContactBook.Controllers
@@ -13,11 +15,11 @@ namespace CustomerContactBook.Controllers
     [ApiController]
     public class CustomerGroupsController : ControllerBase
     {
-        private readonly CustomerGroupContext _context;
+        private readonly GroupService _groupService;
 
-        public CustomerGroupsController(CustomerGroupContext context)
+        public CustomerGroupsController(GroupService groupService)
         {
-            _context = context;
+            _groupService = groupService;
         }
 
         // GET: api/CustomerGroups
@@ -25,9 +27,10 @@ namespace CustomerContactBook.Controllers
         /// Returns all CustomerGroups
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CustomerGroup>>> GetGroups()
+        public async Task<ActionResult<List<CustomerGroupModel>>> GetGroups()
         {
-            return await _context.Groups.ToListAsync();
+            var result = await _groupService.GetGroups();
+            return result;
         }
 
         // GET: api/CustomerGroups/5
@@ -36,16 +39,11 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id"> group id</param>
         [HttpGet("{id}")]
-        public async Task<ActionResult<CustomerGroup>> GetCustomerGroup(int id)
+        public async Task<ActionResult<CustomerGroupModel>> GetCustomerGroup(long id)
         {
-            var customerGroup = await _context.Groups.FindAsync(id);
+            var result = await _groupService.GetCustomerGroup(id);
 
-            if (customerGroup == null)
-            {
-                return NotFound();
-            }
-
-            return customerGroup;
+            return result == null ? NotFound() : result;
         }
 
         // PUT: api/CustomerGroups/5
@@ -57,25 +55,16 @@ namespace CustomerContactBook.Controllers
         /// <param name="id">id of group</param>
         /// <param name="customerGroup">customerGroup to add</param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomerGroup(int id, CustomerGroup customerGroup)
+        public async Task<IActionResult> PutCustomerGroup(int id, CustomerGroupModel customerGroup)
         {
             if (id != customerGroup.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(customerGroup).State = EntityState.Modified;
+            var result = await _groupService.PutCustomerGroup(id, customerGroup);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException) when (!CustomerGroupExists(id))
-            {
-                return NotFound();
-            }
-
-            return NoContent();
+            return result == false ? NotFound() : NoContent();
         }
 
         // POST: api/CustomerGroups
@@ -85,12 +74,11 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="customerGroup">CustomerGroup to add</param>
         [HttpPost]
-        public async Task<ActionResult<CustomerGroup>> PostCustomerGroup(CustomerGroup customerGroup)
+        public async Task<ActionResult<CustomerGroupModel>> PostCustomerGroup(CustomerGroupModel customerGroup)
         {
-            _context.Groups.Add(customerGroup);
-            await _context.SaveChangesAsync();
+            var result = await _groupService.PostCustomerGroup(customerGroup);
 
-            return CreatedAtAction("GetCustomerGroup", new { id = customerGroup.Id }, customerGroup);
+            return CreatedAtAction("GetCustomerGroup", new { id = result.Id }, result);
         }
 
         // DELETE: api/CustomerGroups/5
@@ -101,21 +89,9 @@ namespace CustomerContactBook.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomerGroup(int id)
         {
-            var customerGroup = await _context.Groups.FindAsync(id);
-            if (customerGroup == null)
-            {
-                return NotFound();
-            }
+            var result = await _groupService.DeleteCustomerGroup(id);
 
-            _context.Groups.Remove(customerGroup);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool CustomerGroupExists(int id)
-        {
-            return _context.Groups.Any(e => e.Id == id);
+            return result == false ? NotFound() : NoContent();
         }
     }
 }

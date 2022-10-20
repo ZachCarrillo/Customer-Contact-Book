@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using CustomerContactBook.Models;
+using CustomerContactBook.Services;
+using CustomerContactBook.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<CustomerContext>(opt =>
-               opt.UseInMemoryDatabase("CustomerList"));
-builder.Services.AddDbContext<CustomerGroupContext>(opt =>
-               opt.UseInMemoryDatabase("GroupList"));
-builder.Services.AddDbContext<GroupMemberContext>(opt =>
-               opt.UseInMemoryDatabase("GroupMemberList"));
+builder.Services.AddDbContext<ContactBookContext>(opt =>
+               opt.UseInMemoryDatabase("ContactBook"));
+builder.Services.AddScoped<CustomersService>();
+builder.Services.AddScoped<GroupService>();
+builder.Services.AddScoped<MembersService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

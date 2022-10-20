@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using CustomerContactBook.Services;
+using CustomerContactBook.Database.Tables;
 using CustomerContactBook.Models;
 
 namespace CustomerContactBook.Controllers
@@ -13,11 +15,11 @@ namespace CustomerContactBook.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly CustomerContext _context;
+        private readonly CustomersService _customerService;
 
-        public CustomersController(CustomerContext context)
+        public CustomersController(CustomersService customerService)
         {
-            _context = context;
+            _customerService = customerService;
         }
 
         // GET: api/Customers
@@ -25,9 +27,10 @@ namespace CustomerContactBook.Controllers
         /// return all customers
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
+        public async Task<ActionResult<List<CustomerModel>>> GetCustomers()
         {
-            return await _context.Customers.ToListAsync();
+            var result = await _customerService.GetCustomers();
+            return result;
         }
 
         // GET: api/Customers/5
@@ -36,16 +39,10 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">customer id</param>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer(int id)
+        public async Task<ActionResult<CustomerModel>> GetCustomer(long id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            return customer;
+            var result = await _customerService.GetCustomer(id);
+            return result == null ? NotFound() : result;
         }
 
         // PUT: api/Customers/5
@@ -57,25 +54,14 @@ namespace CustomerContactBook.Controllers
         /// <param name="id">id of customer</param>
         /// <param name="customer">Customer to create</param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(int id, Customer customer)
+        public async Task<IActionResult> PutCustomer(long id, CustomerModel customer)
         {
             if (id != customer.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(customer).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException) when (!CustomerExists(id))
-            {
-                return NotFound();
-            }
-
-            return NoContent();
+            var result = await _customerService.PutCustomer(id, customer);
+            return result == false ? NotFound() : NoContent();
         }
 
         // POST: api/Customers
@@ -85,12 +71,10 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="customer">customer to create</param>
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        public async Task<ActionResult<CustomerModel>> PostCustomer(CustomerModel customer)
         {
-            _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
+            var result = await _customerService.PostCustomer(customer);
+            return CreatedAtAction("GetCustomer", new { id = result.Id }, result);
         }
 
         // DELETE: api/Customers/5
@@ -99,23 +83,10 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">id of customer to delete</param>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCustomer(int id)
+        public async Task<IActionResult> DeleteCustomer(long id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool CustomerExists(int id)
-        {
-            return _context.Customers.Any(e => e.Id == id);
+            var result = await _customerService.DeleteCustomer(id);
+            return result == false ? NotFound() : NoContent();
         }
     }
 }

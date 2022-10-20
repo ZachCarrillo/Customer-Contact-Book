@@ -1,9 +1,11 @@
-﻿namespace CustomerContactBook.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CustomerContactBook.Models
 {
     /// <summary>
     /// Model Class for Customer Group
     /// </summary>
-    public class CustomerGroup
+    public class CustomerGroupModel
     {
         /// <summary>
         /// identifier for CustomerGroup
