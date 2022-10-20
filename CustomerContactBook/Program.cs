@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using CustomerContactBook.Models;
 using CustomerContactBook.Services;
+using CustomerContactBook.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 

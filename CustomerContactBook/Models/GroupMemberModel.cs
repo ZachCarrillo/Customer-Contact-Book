@@ -6,7 +6,7 @@ namespace CustomerContactBook.Models
     /// <summary>
     /// Model Class for GroupMember
     /// </summary>
-    public class GroupMember
+    public class GroupMemberModel
     {
         /// <summary>
         /// id for customer in a group

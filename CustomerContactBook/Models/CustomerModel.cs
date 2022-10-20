@@ -5,13 +5,12 @@ namespace CustomerContactBook.Models
     /// <summary>
     ///  Model class for Customer
     /// </summary>
-    public class Customer
+    public class CustomerModel
     {
         /// <summary>
         /// Customer identifier
         /// </summary>
         /// <example>1893</example>
-        [Key]
         public long Id { get; set; }
         /// <summary>
         /// Customer first name

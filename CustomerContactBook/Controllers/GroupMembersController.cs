@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CustomerContactBook.Models;
 using CustomerContactBook.Controllers;
 using CustomerContactBook.Services;
+using CustomerContactBook.Database.Tables;
+using CustomerContactBook.Models;
 
 namespace CustomerContactBook.Controllers
 {
@@ -27,9 +28,9 @@ namespace CustomerContactBook.Controllers
         /// return all group members
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GroupMember>>> GetGroupMembers()
+        public async Task<ActionResult<List<GroupMemberModel>>> GetGroupMembers()
         {
-            var result = await _membersService.GetGroupMembers();
+            var result =  await _membersService.GetGroupMembers();
             return result;
         }
 
@@ -39,7 +40,7 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">id of group member</param>
         [HttpGet("{Cid}/{Gid}")]
-        public async Task<ActionResult<GroupMember>> GetGroupMember(long Cid, long Gid)
+        public async Task<ActionResult<GroupMemberModel>> GetGroupMember(long Cid, long Gid)
         {
             var result = await _membersService.GetGroupMember(Cid, Gid);
 
@@ -55,7 +56,7 @@ namespace CustomerContactBook.Controllers
         /// <param name="id">id of group member to make</param>
         /// <param name="groupMember">group member to make</param>
         [HttpPut("{Cid}/{Gid}")]
-        public async Task<IActionResult> PutGroupMember(long Gid,long Cid , GroupMember groupMember)
+        public async Task<IActionResult> PutGroupMember(long Gid,long Cid , GroupMemberModel groupMember)
         {
             var result = await _membersService.PutGroupMember(Cid, Gid, groupMember);
             return result == true ? NoContent() : BadRequest();
@@ -68,7 +69,7 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="groupMember">group member to create</param>
         [HttpPost]
-        public async Task<ActionResult<GroupMember>> PostGroupMember(GroupMember groupMember)
+        public async Task<ActionResult<GroupMemberModel>> PostGroupMember(GroupMemberModel groupMember)
         {
             var result = await _membersService.PostGroupMember(groupMember);
 

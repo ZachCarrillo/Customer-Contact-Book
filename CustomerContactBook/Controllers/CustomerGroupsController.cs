@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CustomerContactBook.Models;
 using CustomerContactBook.Services;
+using CustomerContactBook.Database.Tables;
+using CustomerContactBook.Models;
 
 namespace CustomerContactBook.Controllers
 {
@@ -26,7 +27,7 @@ namespace CustomerContactBook.Controllers
         /// Returns all CustomerGroups
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CustomerGroup>>> GetGroups()
+        public async Task<ActionResult<List<CustomerGroupModel>>> GetGroups()
         {
             var result = await _groupService.GetGroups();
             return result;
@@ -38,7 +39,7 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id"> group id</param>
         [HttpGet("{id}")]
-        public async Task<ActionResult<CustomerGroup>> GetCustomerGroup(long id)
+        public async Task<ActionResult<CustomerGroupModel>> GetCustomerGroup(long id)
         {
             var result = await _groupService.GetCustomerGroup(id);
 
@@ -54,7 +55,7 @@ namespace CustomerContactBook.Controllers
         /// <param name="id">id of group</param>
         /// <param name="customerGroup">customerGroup to add</param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomerGroup(int id, CustomerGroup customerGroup)
+        public async Task<IActionResult> PutCustomerGroup(int id, CustomerGroupModel customerGroup)
         {
             if (id != customerGroup.Id)
             {
@@ -73,7 +74,7 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="customerGroup">CustomerGroup to add</param>
         [HttpPost]
-        public async Task<ActionResult<CustomerGroup>> PostCustomerGroup(CustomerGroup customerGroup)
+        public async Task<ActionResult<CustomerGroupModel>> PostCustomerGroup(CustomerGroupModel customerGroup)
         {
             var result = await _groupService.PostCustomerGroup(customerGroup);
 
@@ -90,7 +91,7 @@ namespace CustomerContactBook.Controllers
         {
             var result = await _groupService.DeleteCustomerGroup(id);
 
-            return result == true ? NotFound() : NoContent();
+            return result == false ? NotFound() : NoContent();
         }
     }
 }

@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CustomerContactBook.Models;
 using CustomerContactBook.Services;
+using CustomerContactBook.Database.Tables;
+using CustomerContactBook.Models;
 
 namespace CustomerContactBook.Controllers
 {
@@ -26,7 +27,7 @@ namespace CustomerContactBook.Controllers
         /// return all customers
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
+        public async Task<ActionResult<List<CustomerModel>>> GetCustomers()
         {
             var result = await _customerService.GetCustomers();
             return result;
@@ -38,7 +39,7 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">customer id</param>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer(long id)
+        public async Task<ActionResult<CustomerModel>> GetCustomer(long id)
         {
             var result = await _customerService.GetCustomer(id);
             return result == null ? NotFound() : result;
@@ -53,7 +54,7 @@ namespace CustomerContactBook.Controllers
         /// <param name="id">id of customer</param>
         /// <param name="customer">Customer to create</param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(long id, Customer customer)
+        public async Task<IActionResult> PutCustomer(long id, CustomerModel customer)
         {
             if (id != customer.Id)
             {
@@ -70,7 +71,7 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="customer">customer to create</param>
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        public async Task<ActionResult<CustomerModel>> PostCustomer(CustomerModel customer)
         {
             var result = await _customerService.PostCustomer(customer);
             return CreatedAtAction("GetCustomer", new { id = result.Id }, result);
@@ -85,7 +86,7 @@ namespace CustomerContactBook.Controllers
         public async Task<IActionResult> DeleteCustomer(long id)
         {
             var result = await _customerService.DeleteCustomer(id);
-            return result == true ? NotFound() : NoContent();
+            return result == false ? NotFound() : NoContent();
         }
     }
 }

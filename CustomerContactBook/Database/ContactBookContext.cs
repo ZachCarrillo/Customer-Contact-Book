@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CustomerContactBook.Database.Tables;
+using Microsoft.EntityFrameworkCore;
 
-namespace CustomerContactBook.Models
+namespace CustomerContactBook.Database
 {
     public class ContactBookContext : DbContext
     {
