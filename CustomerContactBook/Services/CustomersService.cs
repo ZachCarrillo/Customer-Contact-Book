@@ -17,8 +17,8 @@ namespace CustomerContactBook.Services
 
         public async Task<List<CustomerModel>> GetCustomers()
         {
-            var result =  await _context.Customers.ToListAsync();
-            return result.Select(toCustomerModel).ToList();
+            var customers =  await _context.Customers.ToListAsync();
+            return customers.Select(ToCustomerModel).ToList();
         }
 
         public async Task<CustomerModel> GetCustomer(long id)
@@ -30,15 +30,15 @@ namespace CustomerContactBook.Services
                 return null;
             }
 
-            return toCustomerModel(customer);
+            return ToCustomerModel(customer);
         }
 
-        public async Task<bool?> PutCustomer(long id, CustomerModel model)
+        public async Task<bool> PutCustomer(long id, CustomerModel model)
         {
-            var customer = toCustomer(model);
+            var customer = ToCustomer(model);
             if (customer == null)
             {
-                return null;
+                return false;
             }
             _context.Entry(customer).State = EntityState.Modified;
 
@@ -48,7 +48,7 @@ namespace CustomerContactBook.Services
             }
             catch (DbUpdateConcurrencyException) when (!CustomerExists(id))
             {
-                return null;
+                return false;
             }
 
             return true;
@@ -69,7 +69,7 @@ namespace CustomerContactBook.Services
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
 
-            return toCustomerModel(customer);
+            return ToCustomerModel(customer);
         }
 
         public async Task<bool> DeleteCustomer(long id)
@@ -91,7 +91,7 @@ namespace CustomerContactBook.Services
             return _context.Customers.Any(e => e.Id == id);
         }
 
-        private static CustomerModel toCustomerModel(Customer customer)
+        private static CustomerModel ToCustomerModel(Customer customer)
         {
             return new CustomerModel
             {
@@ -105,7 +105,7 @@ namespace CustomerContactBook.Services
             };
         }
 
-        private static Customer toCustomer(CustomerModel customer)
+        private static Customer ToCustomer(CustomerModel customer)
         {
             return new Customer
             {

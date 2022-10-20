@@ -61,7 +61,7 @@ namespace CustomerContactBook.Controllers
                 return BadRequest();
             }
             var result = await _customerService.PutCustomer(id, customer);
-            return result == null ? NotFound() : NoContent();
+            return result == false ? NotFound() : NoContent();
         }
 
         // POST: api/Customers

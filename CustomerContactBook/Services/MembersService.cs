@@ -17,8 +17,8 @@ namespace CustomerContactBook.Services
 
         public async Task<List<GroupMemberModel>> GetGroupMembers()
         {
-            var result =  await _context.GroupMembers.ToListAsync();
-            return result.Select(toGroupMemberModel).ToList();
+            var groupMembers =  await _context.GroupMembers.ToListAsync();
+            return groupMembers.Select(ToGroupMemberModel).ToList();
         }
 
         public async Task<GroupMemberModel> GetGroupMember(long Cid, long Gid)
@@ -28,7 +28,7 @@ namespace CustomerContactBook.Services
             {
                 return null;
             }
-            return toGroupMemberModel(groupMember);
+            return ToGroupMemberModel(groupMember);
         }
 
         public async Task<bool> PutGroupMember(long Cid, long Gid, GroupMemberModel groupMember)
@@ -79,7 +79,7 @@ namespace CustomerContactBook.Services
 
             return true;
         }
-        private static GroupMemberModel toGroupMemberModel(GroupMember groupMember)
+        private static GroupMemberModel ToGroupMemberModel(GroupMember groupMember)
         {
             return new GroupMemberModel
             {

@@ -64,7 +64,7 @@ namespace CustomerContactBook.Controllers
 
             var result = await _groupService.PutCustomerGroup(id, customerGroup);
 
-            return result == null ? NotFound() : NoContent();
+            return result == false ? NotFound() : NoContent();
         }
 
         // POST: api/CustomerGroups

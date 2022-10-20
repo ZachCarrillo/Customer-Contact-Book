@@ -17,8 +17,8 @@ namespace CustomerContactBook.Services
 
         public async Task<List<CustomerGroupModel>> GetGroups()
         {
-            var result =  await _context.Groups.ToListAsync();
-            return result.Select(toGroupModel).ToList();
+            var groups =  await _context.Groups.ToListAsync();
+            return groups.Select(ToGroupModel).ToList();
         }
 
         public async Task<CustomerGroupModel> GetCustomerGroup(long id)
@@ -28,15 +28,15 @@ namespace CustomerContactBook.Services
             {
                 return null;
             }
-            return toGroupModel(customerGroup);
+            return ToGroupModel(customerGroup);
         }
 
-        public async Task<bool?> PutCustomerGroup(long id, CustomerGroupModel model)
+        public async Task<bool> PutCustomerGroup(long id, CustomerGroupModel model)
         {
-            var customerGroup = toGroup(model);
+            var customerGroup = ToGroup(model);
             if (customerGroup == null)
             {
-                return null;
+                return false;
             }
 
             _context.Entry(customerGroup).State = EntityState.Modified;
@@ -47,7 +47,7 @@ namespace CustomerContactBook.Services
             }
             catch (DbUpdateConcurrencyException) when (!CustomerGroupExists(id))
             {
-                return null;
+                return false;
             }
 
             return true;
@@ -86,7 +86,7 @@ namespace CustomerContactBook.Services
             return _context.Groups.Any(e => e.Id == id);
         }
 
-        private static CustomerGroupModel toGroupModel(CustomerGroup group)
+        private static CustomerGroupModel ToGroupModel(CustomerGroup group)
         {
             return new CustomerGroupModel
             {
@@ -95,7 +95,7 @@ namespace CustomerContactBook.Services
             };
         }
 
-        private static CustomerGroup toGroup(CustomerGroupModel group)
+        private static CustomerGroup ToGroup(CustomerGroupModel group)
         {
             return new CustomerGroup
             {
