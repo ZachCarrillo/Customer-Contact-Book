@@ -31,7 +31,7 @@ namespace CustomerContactBook.Services
             return ToGroupModel(customerGroup);
         }
 
-        public async Task<bool> PutCustomerGroup(long id, CustomerGroupModel model)
+        public async Task<bool> PutCustomerGroup(long id, CustomerGroupModel model) // better to use real names, like UpdateCustomerGroup, not PUT
         {
             var customerGroup = ToGroup(model);
             if (customerGroup == null)

@@ -5,7 +5,7 @@ namespace CustomerContactBook.Models
     /// <summary>
     /// Model Class for Customer Group
     /// </summary>
-    public class CustomerGroupModel
+    public class CustomerGroupModel // may create CustomerGroupUpdateModel with only Name for PUT and POST requests.
     {
         /// <summary>
         /// identifier for CustomerGroup

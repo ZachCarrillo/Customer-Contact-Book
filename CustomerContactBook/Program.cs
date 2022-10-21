@@ -24,9 +24,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseHttpsRedirection(); // we don't need that here
 
-app.UseAuthorization();
+app.UseAuthorization(); // we don't need this as well
 
 app.MapControllers();
 

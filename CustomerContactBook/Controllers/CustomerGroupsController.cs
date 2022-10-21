@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,7 @@ namespace CustomerContactBook.Controllers
         /// Returns all CustomerGroups
         /// </summary>
         [HttpGet]
+        [ProducesResponseType(typeof(List<CustomerGroupModel>), StatusCodes.Status200OK)]
         public async Task<ActionResult<List<CustomerGroupModel>>> GetGroups()
         {
             var result = await _groupService.GetGroups();
@@ -39,6 +41,8 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id"> group id</param>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(CustomerGroupModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CustomerGroupModel>> GetCustomerGroup(long id)
         {
             var result = await _groupService.GetCustomerGroup(id);
