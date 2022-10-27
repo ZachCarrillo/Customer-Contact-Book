@@ -25,7 +25,12 @@ namespace CustomerContactBook.Controllers
         /// Returns all CustomerGroups
         /// </summary>
         [HttpGet]
+<<<<<<< Updated upstream
         public async Task<ActionResult<IEnumerable<CustomerGroup>>> GetGroups()
+=======
+        [ProducesResponseType(typeof(List<CustomerGroupModel>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<CustomerGroupModel>>> GetGroups()
+>>>>>>> Stashed changes
         {
             return await _context.Groups.ToListAsync();
         }
@@ -36,7 +41,13 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id"> group id</param>
         [HttpGet("{id}")]
+<<<<<<< Updated upstream
         public async Task<ActionResult<CustomerGroup>> GetCustomerGroup(int id)
+=======
+        [ProducesResponseType(typeof(CustomerGroupModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<CustomerGroupModel>> GetCustomerGroup(long id)
+>>>>>>> Stashed changes
         {
             var customerGroup = await _context.Groups.FindAsync(id);
 
@@ -57,13 +68,21 @@ namespace CustomerContactBook.Controllers
         /// <param name="id">id of group</param>
         /// <param name="customerGroup">customerGroup to add</param>
         [HttpPut("{id}")]
+<<<<<<< Updated upstream
         public async Task<IActionResult> PutCustomerGroup(int id, CustomerGroup customerGroup)
+=======
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> PutCustomerGroup(int id, CustomerGroupModel customerGroup)
+>>>>>>> Stashed changes
         {
             if (id != customerGroup.Id)
             {
                 return BadRequest();
             }
 
+<<<<<<< Updated upstream
             _context.Entry(customerGroup).State = EntityState.Modified;
 
             try
@@ -74,6 +93,9 @@ namespace CustomerContactBook.Controllers
             {
                 return NotFound();
             }
+=======
+            var result = await _groupService.UpdateCustomerGroup(id, customerGroup);
+>>>>>>> Stashed changes
 
             return NoContent();
         }
@@ -85,10 +107,17 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="customerGroup">CustomerGroup to add</param>
         [HttpPost]
+<<<<<<< Updated upstream
         public async Task<ActionResult<CustomerGroup>> PostCustomerGroup(CustomerGroup customerGroup)
         {
             _context.Groups.Add(customerGroup);
             await _context.SaveChangesAsync();
+=======
+        [ProducesResponseType(typeof(CustomerGroupModel), StatusCodes.Status201Created)]
+        public async Task<ActionResult<CustomerGroupModel>> PostCustomerGroup(CustomerGroupModel customerGroup)
+        {
+            var result = await _groupService.CreateCustomerGroup(customerGroup);
+>>>>>>> Stashed changes
 
             return CreatedAtAction("GetCustomerGroup", new { id = customerGroup.Id }, customerGroup);
         }
@@ -99,6 +128,8 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">id of group to be deleted</param>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCustomerGroup(int id)
         {
             var customerGroup = await _context.Groups.FindAsync(id);

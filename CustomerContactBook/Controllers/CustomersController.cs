@@ -25,7 +25,12 @@ namespace CustomerContactBook.Controllers
         /// return all customers
         /// </summary>
         [HttpGet]
+<<<<<<< Updated upstream
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
+=======
+        [ProducesResponseType(typeof(List<CustomerModel>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<CustomerModel>>> GetCustomers()
+>>>>>>> Stashed changes
         {
             return await _context.Customers.ToListAsync();
         }
@@ -36,7 +41,13 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">customer id</param>
         [HttpGet("{id}")]
+<<<<<<< Updated upstream
         public async Task<ActionResult<Customer>> GetCustomer(int id)
+=======
+        [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<CustomerModel>> GetCustomer(long id)
+>>>>>>> Stashed changes
         {
             var customer = await _context.Customers.FindAsync(id);
 
@@ -57,12 +68,20 @@ namespace CustomerContactBook.Controllers
         /// <param name="id">id of customer</param>
         /// <param name="customer">Customer to create</param>
         [HttpPut("{id}")]
+<<<<<<< Updated upstream
         public async Task<IActionResult> PutCustomer(int id, Customer customer)
+=======
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> PutCustomer(long id, CustomerModel customer)
+>>>>>>> Stashed changes
         {
             if (id != customer.Id)
             {
                 return BadRequest();
             }
+<<<<<<< Updated upstream
 
             _context.Entry(customer).State = EntityState.Modified;
 
@@ -76,6 +95,10 @@ namespace CustomerContactBook.Controllers
             }
 
             return NoContent();
+=======
+            var result = await _customerService.UpdateCustomer(id, customer);
+            return result == false ? NotFound() : NoContent();
+>>>>>>> Stashed changes
         }
 
         // POST: api/Customers
@@ -85,12 +108,20 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="customer">customer to create</param>
         [HttpPost]
+<<<<<<< Updated upstream
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
+=======
+        [ProducesResponseType(typeof(CustomerModel),StatusCodes.Status201Created)]
+        public async Task<ActionResult<CustomerModel>> PostCustomer(CustomerModel customer)
+        {
+            var result = await _customerService.CreateCustomer(customer);
+            return CreatedAtAction("GetCustomer", new { id = result.Id }, result);
+>>>>>>> Stashed changes
         }
 
         // DELETE: api/Customers/5
@@ -99,6 +130,7 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">id of customer to delete</param>
         [HttpDelete("{id}")]
+<<<<<<< Updated upstream
         public async Task<IActionResult> DeleteCustomer(int id)
         {
             var customer = await _context.Customers.FindAsync(id);
@@ -114,6 +146,11 @@ namespace CustomerContactBook.Controllers
         }
 
         private bool CustomerExists(int id)
+=======
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteCustomer(long id)
+>>>>>>> Stashed changes
         {
             return _context.Customers.Any(e => e.Id == id);
         }
