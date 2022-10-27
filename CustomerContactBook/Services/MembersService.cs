@@ -31,7 +31,7 @@ namespace CustomerContactBook.Services
             return ToGroupMemberModel(groupMember);
         }
 
-        public async Task<bool> PutGroupMember(long Cid, long Gid, GroupMemberModel groupMember)
+        public async Task<bool> UpdateGroupMember(long Cid, long Gid, GroupMemberModel groupMember)
         {
             var toChange = await _context.GroupMembers.FindAsync(Cid, Gid);
             var customer = await _context.Customers.FindAsync(groupMember.CustomerId);
@@ -42,11 +42,11 @@ namespace CustomerContactBook.Services
             }
 
             await DeleteGroupMember(Cid, Gid);
-            await PostGroupMember(groupMember);
+            await CreateGroupMember(groupMember);
             return true;
         }
 
-        public async Task<GroupMemberModel> PostGroupMember(GroupMemberModel model)
+        public async Task<GroupMemberModel> CreateGroupMember(GroupMemberModel model)
         {
             var customer = await _context.Customers.FindAsync(model.CustomerId);
             var group = await _context.Groups.FindAsync(model.GroupId);

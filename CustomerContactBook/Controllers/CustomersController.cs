@@ -27,6 +27,7 @@ namespace CustomerContactBook.Controllers
         /// return all customers
         /// </summary>
         [HttpGet]
+        [ProducesResponseType(typeof(List<CustomerModel>), StatusCodes.Status200OK)]
         public async Task<ActionResult<List<CustomerModel>>> GetCustomers()
         {
             var result = await _customerService.GetCustomers();
@@ -39,6 +40,8 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">customer id</param>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CustomerModel>> GetCustomer(long id)
         {
             var result = await _customerService.GetCustomer(id);
@@ -54,13 +57,16 @@ namespace CustomerContactBook.Controllers
         /// <param name="id">id of customer</param>
         /// <param name="customer">Customer to create</param>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PutCustomer(long id, CustomerModel customer)
         {
             if (id != customer.Id)
             {
                 return BadRequest();
             }
-            var result = await _customerService.PutCustomer(id, customer);
+            var result = await _customerService.UpdateCustomer(id, customer);
             return result == false ? NotFound() : NoContent();
         }
 
@@ -71,9 +77,11 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="customer">customer to create</param>
         [HttpPost]
+        [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status201Created)]
+
         public async Task<ActionResult<CustomerModel>> PostCustomer(CustomerModel customer)
         {
-            var result = await _customerService.PostCustomer(customer);
+            var result = await _customerService.CreateCustomer(customer);
             return CreatedAtAction("GetCustomer", new { id = result.Id }, result);
         }
 
@@ -83,6 +91,8 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">id of customer to delete</param>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCustomer(long id)
         {
             var result = await _customerService.DeleteCustomer(id);

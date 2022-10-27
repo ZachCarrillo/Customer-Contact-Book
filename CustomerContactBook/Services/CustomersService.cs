@@ -33,7 +33,7 @@ namespace CustomerContactBook.Services
             return ToCustomerModel(customer);
         }
 
-        public async Task<bool> PutCustomer(long id, CustomerModel model)
+        public async Task<bool> UpdateCustomer(long id, CustomerModel model)
         {
             var customer = ToCustomer(model);
             if (customer == null)
@@ -54,7 +54,7 @@ namespace CustomerContactBook.Services
             return true;
         }
 
-        public async Task<CustomerModel> PostCustomer(CustomerModel model)
+        public async Task<CustomerModel> CreateCustomer(CustomerModel model)
         {
             var customer = new Customer
             {
