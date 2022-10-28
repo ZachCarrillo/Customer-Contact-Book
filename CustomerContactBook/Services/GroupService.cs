@@ -31,7 +31,7 @@ namespace CustomerContactBook.Services
             return ToGroupModel(customerGroup);
         }
 
-        public async Task<bool> PutCustomerGroup(long id, CustomerGroupModel model)
+        public async Task<bool> UpdateCustomerGroup(long id, CustomerGroupModel model)
         {
             var customerGroup = ToGroup(model);
             if (customerGroup == null)
@@ -53,7 +53,7 @@ namespace CustomerContactBook.Services
             return true;
         }
 
-        public async Task<CustomerGroupModel> PostCustomerGroup(CustomerGroupModel model)
+        public async Task<CustomerGroupModel> CreateCustomerGroup(CustomerGroupModel model)
         {
             var customerGroup = new CustomerGroup
             {

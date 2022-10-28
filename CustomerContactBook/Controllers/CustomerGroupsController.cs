@@ -27,6 +27,7 @@ namespace CustomerContactBook.Controllers
         /// Returns all CustomerGroups
         /// </summary>
         [HttpGet]
+        [ProducesResponseType(typeof(List<CustomerGroupModel>), StatusCodes.Status200OK)]
         public async Task<ActionResult<List<CustomerGroupModel>>> GetGroups()
         {
             var result = await _groupService.GetGroups();
@@ -39,6 +40,8 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id"> group id</param>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(CustomerGroupModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CustomerGroupModel>> GetCustomerGroup(long id)
         {
             var result = await _groupService.GetCustomerGroup(id);
@@ -55,6 +58,9 @@ namespace CustomerContactBook.Controllers
         /// <param name="id">id of group</param>
         /// <param name="customerGroup">customerGroup to add</param>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PutCustomerGroup(int id, CustomerGroupModel customerGroup)
         {
             if (id != customerGroup.Id)
@@ -62,7 +68,7 @@ namespace CustomerContactBook.Controllers
                 return BadRequest();
             }
 
-            var result = await _groupService.PutCustomerGroup(id, customerGroup);
+            var result = await _groupService.UpdateCustomerGroup(id, customerGroup);
 
             return result == false ? NotFound() : NoContent();
         }
@@ -74,9 +80,10 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="customerGroup">CustomerGroup to add</param>
         [HttpPost]
+        [ProducesResponseType(typeof(CustomerGroupModel), StatusCodes.Status201Created)]
         public async Task<ActionResult<CustomerGroupModel>> PostCustomerGroup(CustomerGroupModel customerGroup)
         {
-            var result = await _groupService.PostCustomerGroup(customerGroup);
+            var result = await _groupService.CreateCustomerGroup(customerGroup);
 
             return CreatedAtAction("GetCustomerGroup", new { id = result.Id }, result);
         }
@@ -87,6 +94,8 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">id of group to be deleted</param>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCustomerGroup(int id)
         {
             var result = await _groupService.DeleteCustomerGroup(id);

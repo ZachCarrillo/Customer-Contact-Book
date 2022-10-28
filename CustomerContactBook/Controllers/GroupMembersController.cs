@@ -28,6 +28,7 @@ namespace CustomerContactBook.Controllers
         /// return all group members
         /// </summary>
         [HttpGet]
+        [ProducesResponseType(typeof(List<GroupMemberModel>), StatusCodes.Status200OK)]
         public async Task<ActionResult<List<GroupMemberModel>>> GetGroupMembers()
         {
             var result =  await _membersService.GetGroupMembers();
@@ -40,6 +41,8 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">id of group member</param>
         [HttpGet("{Cid}/{Gid}")]
+        [ProducesResponseType(typeof(GroupMemberModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GroupMemberModel>> GetGroupMember(long Cid, long Gid)
         {
             var result = await _membersService.GetGroupMember(Cid, Gid);
@@ -56,9 +59,12 @@ namespace CustomerContactBook.Controllers
         /// <param name="id">id of group member to make</param>
         /// <param name="groupMember">group member to make</param>
         [HttpPut("{Cid}/{Gid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PutGroupMember(long Gid,long Cid , GroupMemberModel groupMember)
         {
-            var result = await _membersService.PutGroupMember(Cid, Gid, groupMember);
+            var result = await _membersService.UpdateGroupMember(Cid, Gid, groupMember);
             return result == true ? NoContent() : BadRequest();
         }
 
@@ -69,9 +75,10 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="groupMember">group member to create</param>
         [HttpPost]
+        [ProducesResponseType(typeof(GroupMemberModel), StatusCodes.Status201Created)]
         public async Task<ActionResult<GroupMemberModel>> PostGroupMember(GroupMemberModel groupMember)
         {
-            var result = await _membersService.PostGroupMember(groupMember);
+            var result = await _membersService.CreateGroupMember(groupMember);
 
             return result == null ? NotFound() : CreatedAtAction("GetGroupMember", new { Cid = groupMember.CustomerId, Gid = groupMember.GroupId }, groupMember);
         }
@@ -83,6 +90,8 @@ namespace CustomerContactBook.Controllers
         /// <param name="Cid">partial key</param>
         /// <param name="Gid">partial key</param>
         [HttpDelete("{Cid}/{Gid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteGroupMember(long Cid, long Gid)
         {
             var result = await _membersService.DeleteGroupMember(Cid, Gid);
