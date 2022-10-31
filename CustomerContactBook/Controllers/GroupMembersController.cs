@@ -58,7 +58,7 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">id of group member to make</param>
         /// <param name="groupMember">group member to make</param>
-        [HttpPut("{CustomerId:long}/{GroupId:long")]
+        [HttpPut("{CustomerId:long}/{GroupId:long}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -89,7 +89,7 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="Cid">partial key</param>
         /// <param name="Gid">partial key</param>
-        [HttpDelete("{CustomerId:long}/{GroupId:long")]
+        [HttpDelete("{CustomerId:long}/{GroupId:long}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteGroupMember(long Cid, long Gid)
