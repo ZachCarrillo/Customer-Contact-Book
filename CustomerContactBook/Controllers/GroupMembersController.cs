@@ -41,12 +41,12 @@ namespace CustomerContactBook.Controllers
         /// get groupmember with same id
         /// </summary>
         /// <param name="id">id of group member</param>
-        [HttpGet("{CustomerId:long}/{GroupId:long}")]
+        [HttpGet("{customerId:long}/{groupId:long}")]
         [ProducesResponseType(typeof(GroupMemberModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<GroupMemberModel>> GetGroupMember(long CustomerId, long GroupId)
+        public async Task<ActionResult<GroupMemberModel>> GetGroupMember(long customerId, long groupId)
         {
-            var result = await _membersService.GetGroupMember(CustomerId, GroupId);
+            var result = await _membersService.GetGroupMember(customerId, groupId);
 
             return result == null ? NotFound() : result;
         }
@@ -59,13 +59,13 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="id">id of group member to make</param>
         /// <param name="groupMember">group member to make</param>
-        [HttpPut("{CustomerId:long}/{GroupId:long}")]
+        [HttpPut("{customerId:long}/{groupId:long}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutGroupMember(long CustomerId, long GroupId, GroupMemberModel groupMember)
+        public async Task<IActionResult> PutGroupMember(long customerId, long groupId, GroupMemberModel groupMember)
         {
-            var result = await _membersService.UpdateGroupMember(CustomerId, GroupId , groupMember);
+            var result = await _membersService.UpdateGroupMember(customerId, groupId , groupMember);
             return result == true ? NoContent() : BadRequest();
         }
 
@@ -90,12 +90,12 @@ namespace CustomerContactBook.Controllers
         /// </summary>
         /// <param name="Cid">partial key</param>
         /// <param name="Gid">partial key</param>
-        [HttpDelete("{CustomerId:long}/{GroupId:long}")]
+        [HttpDelete("{customerId:long}/{groupId:long}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteGroupMember(long CustomerId, long GroupId)
+        public async Task<IActionResult> DeleteGroupMember(long customerId, long groupId)
         {
-            var result = await _membersService.DeleteGroupMember(CustomerId, GroupId);
+            var result = await _membersService.DeleteGroupMember(customerId, groupId);
             return result == false ? NotFound() : NoContent();
         }
 
