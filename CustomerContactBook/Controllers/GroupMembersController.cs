@@ -9,6 +9,7 @@ using CustomerContactBook.Controllers;
 using CustomerContactBook.Services;
 using CustomerContactBook.Database.Tables;
 using CustomerContactBook.Models;
+using System.Text.RegularExpressions;
 
 namespace CustomerContactBook.Controllers
 {
@@ -43,9 +44,9 @@ namespace CustomerContactBook.Controllers
         [HttpGet("{CustomerId:long}/{GroupId:long}")]
         [ProducesResponseType(typeof(GroupMemberModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<GroupMemberModel>> GetGroupMember(long Cid, long Gid)
+        public async Task<ActionResult<GroupMemberModel>> GetGroupMember(long CustomerId, long GroupId)
         {
-            var result = await _membersService.GetGroupMember(Cid, Gid);
+            var result = await _membersService.GetGroupMember(CustomerId, GroupId);
 
             return result == null ? NotFound() : result;
         }
@@ -62,9 +63,9 @@ namespace CustomerContactBook.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutGroupMember(long Gid,long Cid , GroupMemberModel groupMember)
+        public async Task<IActionResult> PutGroupMember(long CustomerId, long GroupId, GroupMemberModel groupMember)
         {
-            var result = await _membersService.UpdateGroupMember(Cid, Gid, groupMember);
+            var result = await _membersService.UpdateGroupMember(CustomerId, GroupId , groupMember);
             return result == true ? NoContent() : BadRequest();
         }
 
@@ -92,9 +93,9 @@ namespace CustomerContactBook.Controllers
         [HttpDelete("{CustomerId:long}/{GroupId:long}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteGroupMember(long Cid, long Gid)
+        public async Task<IActionResult> DeleteGroupMember(long CustomerId, long GroupId)
         {
-            var result = await _membersService.DeleteGroupMember(Cid, Gid);
+            var result = await _membersService.DeleteGroupMember(CustomerId, GroupId);
             return result == false ? NotFound() : NoContent();
         }
 
