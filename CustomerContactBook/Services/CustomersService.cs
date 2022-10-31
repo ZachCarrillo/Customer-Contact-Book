@@ -21,7 +21,7 @@ namespace CustomerContactBook.Services
             return customers.Select(ToCustomerModel).ToList();
         }
 
-        public async Task<CustomerModel> GetCustomer(long id)
+        public async Task<CustomerModel?> GetCustomer(long id)
         {
             var customer = await _context.Customers.FindAsync(id);
 
@@ -36,10 +36,7 @@ namespace CustomerContactBook.Services
         public async Task<bool> UpdateCustomer(long id, CustomerModel model)
         {
             var customer = ToCustomer(model);
-            if (customer == null)
-            {
-                return false;
-            }
+
             _context.Entry(customer).State = EntityState.Modified;
 
             try
