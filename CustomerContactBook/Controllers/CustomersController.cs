@@ -22,7 +22,7 @@ namespace CustomerContactBook.Controllers
             _customerService = customerService;
         }
 
-        // GET: api/Customers
+
         /// <summary>
         /// return all customers
         /// </summary>
@@ -34,12 +34,12 @@ namespace CustomerContactBook.Controllers
             return result;
         }
 
-        // GET: api/Customers/5
+
         /// <summary>
         /// return customer with same id
         /// </summary>
         /// <param name="id">customer id</param>
-        [HttpGet("{id}")]
+        [HttpGet("{id:long}")]
         [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CustomerModel>> GetCustomer(long id)
@@ -48,15 +48,14 @@ namespace CustomerContactBook.Controllers
             return result == null ? NotFound() : result;
         }
 
-        // PUT: api/Customers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         /// <summary>
         /// updates customer with specified id if exists
         /// returns 404 not found if id doesnt exist
         /// </summary>
         /// <param name="id">id of customer</param>
         /// <param name="customer">Customer to create</param>
-        [HttpPut("{id}")]
+        [HttpPut("{id:long}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -70,7 +69,7 @@ namespace CustomerContactBook.Controllers
             return result == false ? NotFound() : NoContent();
         }
 
-        // POST: api/Customers
+
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         /// <summary>
         /// create customer
@@ -85,12 +84,12 @@ namespace CustomerContactBook.Controllers
             return CreatedAtAction("GetCustomer", new { id = result.Id }, result);
         }
 
-        // DELETE: api/Customers/5
+
         /// <summary>
         /// delete customer with same id
         /// </summary>
         /// <param name="id">id of customer to delete</param>
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:long}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCustomer(long id)

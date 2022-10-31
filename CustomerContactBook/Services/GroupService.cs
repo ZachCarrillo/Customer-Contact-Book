@@ -21,7 +21,7 @@ namespace CustomerContactBook.Services
             return groups.Select(ToGroupModel).ToList();
         }
 
-        public async Task<CustomerGroupModel> GetCustomerGroup(long id)
+        public async Task<CustomerGroupModel?> GetCustomerGroup(long id)
         {
             var customerGroup = await _context.Groups.FindAsync(id);
             if (customerGroup == null)
@@ -34,10 +34,6 @@ namespace CustomerContactBook.Services
         public async Task<bool> UpdateCustomerGroup(long id, CustomerGroupModel model)
         {
             var customerGroup = ToGroup(model);
-            if (customerGroup == null)
-            {
-                return false;
-            }
 
             _context.Entry(customerGroup).State = EntityState.Modified;
 

@@ -22,7 +22,7 @@ namespace CustomerContactBook.Controllers
             _groupService = groupService;
         }
 
-        // GET: api/CustomerGroups
+
         /// <summary>
         /// Returns all CustomerGroups
         /// </summary>
@@ -34,12 +34,12 @@ namespace CustomerContactBook.Controllers
             return result;
         }
 
-        // GET: api/CustomerGroups/5
+
         /// <summary>
         /// Return customer groups with same id
         /// </summary>
         /// <param name="id"> group id</param>
-        [HttpGet("{id}")]
+        [HttpGet("{id:long}")]
         [ProducesResponseType(typeof(CustomerGroupModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CustomerGroupModel>> GetCustomerGroup(long id)
@@ -49,19 +49,19 @@ namespace CustomerContactBook.Controllers
             return result == null ? NotFound() : result;
         }
 
-        // PUT: api/CustomerGroups/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+
         /// <summary>
         /// creates customer group with specified id
         /// returns 404 not found if id doesnt exist
         /// </summary>
         /// <param name="id">id of group</param>
         /// <param name="customerGroup">customerGroup to add</param>
-        [HttpPut("{id}")]
+        [HttpPut("{id:long}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutCustomerGroup(int id, CustomerGroupModel customerGroup)
+        public async Task<IActionResult> PutCustomerGroup(long id, CustomerGroupModel customerGroup)
         {
             if (id != customerGroup.Id)
             {
@@ -73,8 +73,7 @@ namespace CustomerContactBook.Controllers
             return result == false ? NotFound() : NoContent();
         }
 
-        // POST: api/CustomerGroups
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         /// <summary>
         /// Create new customer groip
         /// </summary>
@@ -88,15 +87,15 @@ namespace CustomerContactBook.Controllers
             return CreatedAtAction("GetCustomerGroup", new { id = result.Id }, result);
         }
 
-        // DELETE: api/CustomerGroups/5
+
         /// <summary>
         /// Delete specified group
         /// </summary>
         /// <param name="id">id of group to be deleted</param>
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:long}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteCustomerGroup(int id)
+        public async Task<IActionResult> DeleteCustomerGroup(long id)
         {
             var result = await _groupService.DeleteCustomerGroup(id);
 

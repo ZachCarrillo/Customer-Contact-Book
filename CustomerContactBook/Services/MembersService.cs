@@ -21,7 +21,7 @@ namespace CustomerContactBook.Services
             return groupMembers.Select(ToGroupMemberModel).ToList();
         }
 
-        public async Task<GroupMemberModel> GetGroupMember(long Cid, long Gid)
+        public async Task<GroupMemberModel?> GetGroupMember(long Cid, long Gid)
         {
             var groupMember = await _context.GroupMembers.FindAsync(Cid, Gid);
             if (groupMember == null)
@@ -46,7 +46,7 @@ namespace CustomerContactBook.Services
             return true;
         }
 
-        public async Task<GroupMemberModel> CreateGroupMember(GroupMemberModel model)
+        public async Task<GroupMemberModel?> CreateGroupMember(GroupMemberModel model)
         {
             var customer = await _context.Customers.FindAsync(model.CustomerId);
             var group = await _context.Groups.FindAsync(model.GroupId);

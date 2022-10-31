@@ -23,7 +23,7 @@ namespace CustomerContactBook.Controllers
             _membersService = membersService;
         }
 
-        // GET: api/GroupMembers
+
         /// <summary>
         /// return all group members
         /// </summary>
@@ -35,12 +35,12 @@ namespace CustomerContactBook.Controllers
             return result;
         }
 
-        // GET: api/GroupMembers/5
+
         /// <summary>
         /// get groupmember with same id
         /// </summary>
         /// <param name="id">id of group member</param>
-        [HttpGet("{Cid}/{Gid}")]
+        [HttpGet("{CustomerId:long}/{GroupId:long}")]
         [ProducesResponseType(typeof(GroupMemberModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GroupMemberModel>> GetGroupMember(long Cid, long Gid)
@@ -50,15 +50,15 @@ namespace CustomerContactBook.Controllers
             return result == null ? NotFound() : result;
         }
 
-        // PUT: api/GroupMembers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+
         /// <summary>
         /// updates groupmember with specified id.
         /// returns 404 not found if id doesnt exits
         /// </summary>
         /// <param name="id">id of group member to make</param>
         /// <param name="groupMember">group member to make</param>
-        [HttpPut("{Cid}/{Gid}")]
+        [HttpPut("{CustomerId:long}/{GroupId:long")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -68,7 +68,7 @@ namespace CustomerContactBook.Controllers
             return result == true ? NoContent() : BadRequest();
         }
 
-        // POST: api/GroupMembers
+
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         /// <summary>
         /// create a group member
@@ -83,13 +83,13 @@ namespace CustomerContactBook.Controllers
             return result == null ? NotFound() : CreatedAtAction("GetGroupMember", new { Cid = groupMember.CustomerId, Gid = groupMember.GroupId }, groupMember);
         }
 
-        // DELETE: api/GroupMembers/5
+
         /// <summary>
         /// delete a group member with specified id
         /// </summary>
         /// <param name="Cid">partial key</param>
         /// <param name="Gid">partial key</param>
-        [HttpDelete("{Cid}/{Gid}")]
+        [HttpDelete("{CustomerId:long}/{GroupId:long")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteGroupMember(long Cid, long Gid)
